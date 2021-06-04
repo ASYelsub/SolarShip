@@ -525,8 +525,11 @@ namespace InternalRealtimeCSG
             return null;
         }
 
-        static GameObject FindFirstWorldIntersection(Camera camera, Vector2 screenPos, Vector3 worldRayStart, Vector3 worldRayEnd, List<GameObject> ignoreGameObjects = null, List<CSGBrush> ignoreBrushes = null, bool ignoreInvisibleSurfaces = true)
+        static GameObject FindFirstWorldIntersection(Camera camera, Vector2 screenPos, Vector3 worldRayStart, Vector3 worldRayEnd, out MeshRenderer meshRenderer, out int materialIndex, List<GameObject> ignoreGameObjects = null, List<CSGBrush> ignoreBrushes = null, bool ignoreInvisibleSurfaces = true)
         {
+			meshRenderer = null;
+			materialIndex = 0;
+
             var wireframeShown = CSGSettings.IsWireframeShown(camera);
 
             TryAgain:
@@ -537,7 +540,10 @@ namespace InternalRealtimeCSG
             var ignoreGameObjectArray = (ignoreGameObjects == null || ignoreGameObjects.Count == 0) ? null : ignoreGameObjects.ToArray();
             {
                 var flagState = BeginPicking(ignoreGameObjectArray);
-                try { gameObject = HandleUtility.PickGameObject(screenPos, false, ignoreGameObjectArray); }
+                try 
+				{ 
+					gameObject = HandleUtility.PickGameObject(screenPos, ignoreGameObjectArray, out materialIndex); 
+				}
                 finally { model = EndPicking(flagState, gameObject); }
             }
 
@@ -580,14 +586,17 @@ namespace InternalRealtimeCSG
             if (ReferenceEquals(gameObject, null) ||
                 !gameObject)
                 return null;
-             
-            // Make sure our found gameobject isn't sneakily a CSG related object (should not happen at this point)
-            if (!gameObject.GetComponent<CSGModel>() &&
-                !gameObject.GetComponent<CSGBrush>() &&
-                !gameObject.GetComponent<CSGOperation>() &&
-                !gameObject.GetComponent<GeneratedMeshInstance>() &&
-                !gameObject.GetComponent<GeneratedMeshes>())
-                return gameObject;
+
+			// Make sure our found gameobject isn't sneakily a CSG related object (should not happen at this point)
+			if (!gameObject.GetComponent<CSGModel>() &&
+				!gameObject.GetComponent<CSGBrush>() &&
+				!gameObject.GetComponent<CSGOperation>() &&
+				!gameObject.GetComponent<GeneratedMeshInstance>() &&
+				!gameObject.GetComponent<GeneratedMeshes>())
+			{
+				meshRenderer = gameObject.GetComponent<MeshRenderer>();
+				return gameObject;
+			}
 
             // If we're not ignoring something, just return null after all
             if (ignoreGameObjects == null)
@@ -598,9 +607,24 @@ namespace InternalRealtimeCSG
             goto TryAgain;
         }
 
+		public static bool FindClickWorldIntersection(Camera camera, Vector2 screenPos, out GameObject foundObject, bool ignoreInvisibleSurfaces = true, bool ignoreDeepClick = false)
+        {
+			MeshRenderer meshRenderer = null;
+			int materialIndex=  0;
+			return FindClickWorldIntersection(camera, screenPos, out foundObject, out meshRenderer, out materialIndex, ignoreInvisibleSurfaces, ignoreDeepClick);
+		}
 
-        public static bool FindClickWorldIntersection(Camera camera, Vector2 screenPos, out GameObject foundObject, bool ignoreInvisibleSurfaces = true)
+		public static void ClearDeepClick()
+        {
+			clearDeepClick = true;
+		}
+
+		static bool clearDeepClick = false;
+
+		public static bool FindClickWorldIntersection(Camera camera, Vector2 screenPos, out GameObject foundObject, out MeshRenderer meshRenderer, out int materialIndex, bool ignoreInvisibleSurfaces = true, bool ignoreDeepClick = false)
 		{
+			meshRenderer = null;
+			materialIndex = 0;
 			foundObject = null;
 			if (!camera)
 				return false;
@@ -610,16 +634,21 @@ namespace InternalRealtimeCSG
 			var worldRayVector	= (worldRay.direction * (camera.farClipPlane - camera.nearClipPlane));
 			var worldRayEnd		= worldRayStart + worldRayVector;
 
-            // If we moved our mouse, reset our ignore list
-            if (_prevSceenPos != screenPos ||
-                _prevCamera != camera)
-                ResetDeepClick();
+			// If we moved our mouse, reset our ignore list
+			if (_prevSceenPos != screenPos ||
+				_prevCamera != camera ||
+				ignoreDeepClick || 
+				clearDeepClick)
+			{
+				ResetDeepClick();
+				clearDeepClick = false;
+			}
 
             _prevSceenPos = screenPos;
             _prevCamera = camera;
 
             // Get the first click that is not in our ignore list
-            foundObject = FindFirstWorldIntersection(camera, screenPos, worldRayStart, worldRayEnd, deepClickIgnoreGameObjectList, deepClickIgnoreBrushList, ignoreInvisibleSurfaces);
+            foundObject = FindFirstWorldIntersection(camera, screenPos, worldRayStart, worldRayEnd, out meshRenderer, out materialIndex, deepClickIgnoreGameObjectList, deepClickIgnoreBrushList, ignoreInvisibleSurfaces);
 
             // If we haven't found anything, try getting the first item in our list that's either a brush or a regular gameobject (loop around)
             if (object.Equals(foundObject, null))
@@ -853,7 +882,7 @@ namespace InternalRealtimeCSG
 			{
 				var model = InternalCSGModelManager.Models[g];
                 
-                if (!ModelTraits.IsModelSelectable(model))
+                if (!model.isActiveAndEnabled || !ModelTraits.IsModelSelectable(model))
 					continue;
 
 				if (ignoreUnrenderables && !ModelTraits.WillModelRender(model) &&
@@ -886,14 +915,14 @@ namespace InternalRealtimeCSG
 					continue;
 
 				var brush = modelIntersection.gameObject.GetComponent<CSGBrush>();
-				if (BrushTraits.IsSurfaceUnselectable(brush, modelIntersection.surfaceIndex, brush.ChildData.Model.IsTrigger, !ignoreInvisibleSurfaces))
+				if (BrushTraits.IsSurfaceUnselectable(brush, modelIntersection.surfaceIndex, brush.ChildData.Model.IsTrigger, ignoreInvisibleSurfaces))
 					continue;
 
 				modelIntersection.brush = brush;
 
 				intersection = modelIntersection;
 			}
-
+			
 			if (intersection == null)
 				return false;
 			
@@ -904,7 +933,7 @@ namespace InternalRealtimeCSG
         #region FindWorldIntersection
         static bool FindWorldIntersection(CSGModel model, Vector3 worldRayStart, Vector3 worldRayEnd, out LegacyBrushIntersection[] intersections, bool ignoreInvisibleSurfaces = true, bool ignoreUnrenderables = true, CSGBrush[] ignoreBrushes = null)
         {
-            intersections = null;
+			intersections = null;
             if (InternalCSGModelManager.External == null ||
                 InternalCSGModelManager.External.RayCastIntoModelMulti == null)
                 return false;
@@ -933,7 +962,7 @@ namespace InternalRealtimeCSG
             {
                 var intersection = modelIntersections[i];
                 var brush = intersection.gameObject.GetComponent<CSGBrush>();
-                if (BrushTraits.IsSurfaceUnselectable(brush, intersection.surfaceIndex, brush.ChildData.Model.IsTrigger, ignoreSurfaceFlags: !ignoreInvisibleSurfaces))
+                if (BrushTraits.IsSurfaceUnselectable(brush, intersection.surfaceIndex, brush.ChildData.Model.IsTrigger, ignoreSurfaceFlags: ignoreInvisibleSurfaces))
                     continue;
 
 				var currentNode = GetTopMostGroupForNode(brush);
@@ -994,7 +1023,7 @@ namespace InternalRealtimeCSG
 				{
 					var intersection	= modelIntersections[i];
 					var brush			= intersection.gameObject.GetComponent<CSGBrush>();
-					if (BrushTraits.IsSurfaceUnselectable(brush, intersection.surfaceIndex, brush.ChildData.Model.IsTrigger, ignoreSurfaceFlags: !ignoreInvisibleSurfaces))
+					if (BrushTraits.IsSurfaceUnselectable(brush, intersection.surfaceIndex, brush.ChildData.Model.IsTrigger, ignoreSurfaceFlags: ignoreInvisibleSurfaces))
 						continue;
 					
 					var currentNode = GetTopMostGroupForNode(brush);

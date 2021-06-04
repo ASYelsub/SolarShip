@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -309,6 +309,8 @@ namespace RealtimeCSG
 				var gameObject = monoBehaviour.gameObject;
 				if (((1 << gameObject.layer) & visibleLayers) == 0)
 					continue;
+					
+				var distance = (__outputIntersections[i].intersection.worldIntersection - worldRayStart).magnitude;
 
 				intersectionList.Add(new LegacyBrushIntersection
 				{
@@ -322,7 +324,7 @@ namespace RealtimeCSG
 					worldPlane			= new CSGPlane(__outputIntersections[i].intersection.worldPlane),
 					worldIntersection	= __outputIntersections[i].intersection.worldIntersection,
 					surfaceIntersection = __outputIntersections[i].intersection.surfaceIntersection,
-					distance			= __outputIntersections[i].intersection.distance
+					distance			= distance//__outputIntersections[i].intersection.distance
 				});
 			}
 
@@ -371,7 +373,7 @@ namespace RealtimeCSG
 				ignoreNodeIDsPtr	= ignoreNodeIDsHandle.AddrOfPinnedObject();
 			}
 			
-			GCHandle outputIntersectionsHandle	= GCHandle.Alloc(__outputIntersections, GCHandleType.Pinned);
+			GCHandle outputIntersectionsHandle = GCHandle.Alloc(__outputIntersections, GCHandleType.Pinned);
 
 			var visibleLayers	 = Tools.visibleLayers;
 			__intersectionList.Clear();
@@ -390,7 +392,7 @@ namespace RealtimeCSG
 
 				if (intersectionCount == 0)
 					continue;
-
+				
 				if (__prevIntersectionCount < intersectionCount)
 				{
 					if (outputIntersectionsHandle.IsAllocated) 
@@ -418,6 +420,8 @@ namespace RealtimeCSG
 					var gameObject = monoBehaviour.gameObject;
 					if (((1 << gameObject.layer) & visibleLayers) == 0)
 						continue;
+
+					var distance = (__outputIntersections[i].intersection.worldIntersection - rayStart).magnitude;
 					
 					__intersectionList.Add(new LegacyBrushIntersection
 					{
@@ -431,7 +435,7 @@ namespace RealtimeCSG
 						worldPlane			= new CSGPlane(__outputIntersections[i].intersection.worldPlane),
 						worldIntersection	= __outputIntersections[i].intersection.worldIntersection,
 						surfaceIntersection = __outputIntersections[i].intersection.surfaceIntersection,
-						distance			= __outputIntersections[i].intersection.distance,						
+						distance			= distance//__outputIntersections[i].intersection.distance,						
 					});
 				}
 			}
@@ -449,10 +453,9 @@ namespace RealtimeCSG
 			}
 
 			__intersectionList.Sort(delegate(LegacyBrushIntersection x, LegacyBrushIntersection y)
-				{
-					return (int)Mathf.Sign(y.distance - x.distance);
-				}
-			);
+									{
+										return (int)Mathf.Sign(y.distance - x.distance);
+									});
 
 			intersections = __intersectionList.ToArray();
 			return true;
@@ -543,6 +546,8 @@ namespace RealtimeCSG
 				intersection = null;
 				return false;
 			}
+					
+			var distance = (outputSurfaceIntersection.worldIntersection - rayStart).magnitude;
 
 			intersection = new LegacySurfaceIntersection
 			{
@@ -551,7 +556,7 @@ namespace RealtimeCSG
 				worldPlane			= new CSGPlane(outputSurfaceIntersection.worldPlane),
 				surfaceIntersection = outputSurfaceIntersection.surfaceIntersection,
 				worldIntersection	= outputSurfaceIntersection.worldIntersection,
-				distance			= outputSurfaceIntersection.distance
+				distance			= distance//outputSurfaceIntersection.distance
 			};
 			return true;
 		}

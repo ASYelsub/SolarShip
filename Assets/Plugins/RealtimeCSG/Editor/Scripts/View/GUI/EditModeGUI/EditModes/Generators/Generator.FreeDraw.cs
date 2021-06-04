@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -92,6 +92,13 @@ namespace RealtimeCSG
 			base.planeOnGeometry = true;
 			base.smearTextures = false;
 			
+
+			var brushScale = brush.transform.lossyScale;
+			var brushInverted = (Math.Sign(brushScale.x) * Math.Sign(brushScale.y) * Math.Sign(brushScale.z)) < 0;
+
+			if (brushInverted)
+				plane = plane.Negated();
+
 			settings.Init(meshVertices, indices);
 
 			haveForcedDirection = true;
@@ -364,7 +371,7 @@ namespace RealtimeCSG
 			if (curvedEdges == null)
 				return false;
 			ShapePolygonUtility.RemoveDuplicatePoints(ref outlineVertices);
-
+			
 			if (generateSmoothing)
 			{
 				var usedSmoothingGroupIndices = SurfaceUtility.GetUsedSmoothingGroupIndices();
@@ -609,6 +616,14 @@ namespace RealtimeCSG
 																	 out newShape))
 			{
 				return false;
+			}
+
+			var parentScale = parentTransform.lossyScale;
+			var parentInverted = (Math.Sign(parentScale.x) * Math.Sign(parentScale.y) * Math.Sign(parentScale.z)) < 0;
+			if (parentInverted)
+			{
+				ControlMeshUtility.InvertControlMesh(newControlMesh);
+				ControlMeshUtility.InvertShape(newShape);
 			}
 
 			brush.Shape = newShape;
@@ -1365,7 +1380,7 @@ namespace RealtimeCSG
 						visualSnappedBrush.ChildData != null &&
 						visualSnappedBrush.ChildData.ModelTransform)
 					{
-						var brush_transformation	= visualSnappedBrush.compareTransformation.localToWorldMatrix;
+						var brush_transformation = visualSnappedBrush.compareTransformation.localToWorldMatrix;
 						CSGRenderer.DrawOutlines(visualSnappedBrush.brushNodeID, brush_transformation, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines);
 					}
 				}
@@ -1510,7 +1525,7 @@ namespace RealtimeCSG
 						visualSnappedBrush.ChildData != null &&
 						visualSnappedBrush.ChildData.ModelTransform)
 					{
-						var brush_transformation	= visualSnappedBrush.compareTransformation.localToWorldMatrix;
+						var brush_transformation = visualSnappedBrush.compareTransformation.localToWorldMatrix;
 						CSGRenderer.DrawOutlines(visualSnappedBrush.brushNodeID, brush_transformation, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines, ColorSettings.SelectedOutlines);
 					}						
 				}

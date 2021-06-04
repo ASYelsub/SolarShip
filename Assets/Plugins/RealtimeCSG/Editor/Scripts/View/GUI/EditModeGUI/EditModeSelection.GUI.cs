@@ -11,7 +11,6 @@ namespace RealtimeCSG
 	{
 		static int SceneViewBrushEditorOverlayHash = "SceneViewBrushEditorOverlay".GetHashCode();
 
-		static GUI.WindowFunction windowFunction = new GUI.WindowFunction(EditModeSelectionGUI.HandleSceneGUI);
 
 		public static float OnEditModeSelectionGUI()
 		{			
@@ -32,6 +31,7 @@ namespace RealtimeCSG
 		}
 
 		static GUIStyle sceneViewOverlayTransparentBackground = "SceneViewOverlayTransparentBackground";
+		static GUI.WindowFunction windowFunction = new GUI.WindowFunction(EditModeSelectionGUI.HandleSceneGUI);
 		
 		public static void HandleWindowGUI(Rect windowRect)
 		{
@@ -48,7 +48,8 @@ namespace RealtimeCSG
 			TooltipUtility.InitToolTip(sceneView);
 			var originalSkin = GUI.skin;
 			{
-				OnEditModeSelectionSceneGUI();
+				if (!SceneDragToolManager.IsDraggingObjectInScene)
+					OnEditModeSelectionSceneGUI();
 
 				var viewRect = new Rect(4, 0, sceneView.position.width, sceneView.position.height - (CSG_GUIStyleUtility.BottomToolBarHeight + 4));
 				GUILayout.BeginArea(viewRect);
@@ -59,7 +60,7 @@ namespace RealtimeCSG
 				}
 				GUILayout.EndArea();
 
-				if (RealtimeCSG.CSGSettings.EnableRealtimeCSG)
+				if (RealtimeCSG.CSGSettings.EnableRealtimeCSG && !SceneDragToolManager.IsDraggingObjectInScene)
 					SceneViewBottomBarGUI.ShowGUI(sceneView, haveOffset: false);
 			}
 			GUI.skin = originalSkin;

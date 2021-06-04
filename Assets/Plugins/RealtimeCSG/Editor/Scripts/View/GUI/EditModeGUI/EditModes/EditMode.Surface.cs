@@ -459,7 +459,7 @@ namespace RealtimeCSG
         
         EditMode SetHoverOn(EditMode editModeType, int target, int index = -1)
         {
-            hoverOnTarget	= target;
+            hoverOnTarget	= target; 
             if (target == -1)
             {
                 hoverOnSurfaceIndex = -1;
@@ -947,6 +947,7 @@ namespace RealtimeCSG
         
         [NonSerialized] Vector2 prevMousePos;
 
+        bool clickedInScene = false;
 
         public void HandleEvents(SceneView sceneView, Rect sceneRect)
         {
@@ -969,27 +970,40 @@ namespace RealtimeCSG
             
                 switch (Event.current.type)
                 {
-                    //case EventType.MouseDown:
-                    case EventType.MouseUp:
-                    case EventType.MouseDrag:
+                    case EventType.MouseDown:
                     {
-                        if (Event.current.button != 0 ||
-                            GUIUtility.hotControl != 0)
-                            break;
-                        
+                        clickedInScene = false;
                         if (!sceneRect.Contains(Event.current.mousePosition))
                             break;
 
                         var guiArea = GetLastSceneGUIRect();
-                        GameObject gameObject = null;
                         if (guiArea.Contains(Event.current.mousePosition))
                             break;
 
+                        clickedInScene = true;
+                        break;
+                    }
+                    case EventType.MouseUp:
+                    case EventType.MouseDrag:
+                    {
+                        if (!clickedInScene ||
+                            Event.current.button != 0 ||
+                            GUIUtility.hotControl != 0)
+                            break;
+
+                        if (!sceneRect.Contains(Event.current.mousePosition))
+                            break;
+
+                        var guiArea = GetLastSceneGUIRect();
+                        if (guiArea.Contains(Event.current.mousePosition))
+                            break;
+
+                        GameObject gameObject = null;
                         if (SceneQueryUtility.FindUnityWorldIntersection(camera, Event.current.mousePosition, out gameObject))
                         {
                             if (gameObject == null &&
                                 Event.current.type == EventType.MouseUp)
-                            {
+                            { 
                                 SelectionUtility.DeselectAll();
                             } else
                                 SelectionUtility.DoSelectionClick(sceneView);
@@ -1088,6 +1102,7 @@ namespace RealtimeCSG
                     
                     case EventType.KeyDown:
                     {
+                        SceneQueryUtility.ClearDeepClick();
                         if (Keys.CancelActionKey.IsKeyPressed()) { Event.current.Use(); break; }
                         if (Keys.CopyMaterialTexGen.IsKeyPressed()) { if (dragMode == DragMode.None) dragMode = DragMode.TextureCopy; Event.current.Use(); break; }
                         if (Keys.HandleSceneKeyDown(EditModeManager.CurrentTool, false)) { Event.current.Use(); break; }
@@ -1207,7 +1222,7 @@ namespace RealtimeCSG
                             if (!mouseIsDragging &&
                                 !guiArea.Contains(Event.current.mousePosition) &&
                                 SceneQueryUtility.FindWorldIntersection(ray_start, ray_end, 
-                                                                        out intersection, ignoreInvisibleSurfaces: false, 
+                                                                        out intersection, ignoreInvisibleSurfaces: true, 
                                                                         ignoreUnrenderables: !wireframeShown))
                             {
                                 var targets = brushTargets;
@@ -1307,7 +1322,7 @@ namespace RealtimeCSG
                             if ( nearestControl != -1)
                             {
                                 surfaceState.UnHoverAll();
-                    
+
                                 if (newEditMode == EditMode.None)
                                 {
                                     for (int s = 0; s < surfaceState.surfaceSelectState.Length; s++)
