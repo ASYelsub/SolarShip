@@ -45,6 +45,26 @@ public abstract class P_Item : MonoBehaviour
         this.ItemID = itemID;
     }
 
+    public void TouchOtherItem3D()
+    {
+
+    }
+
+    public void UnTouchOtherItem3D()
+    {
+
+    }
+
+    public void SetInMachine()
+    {
+
+    }
+
+    public void RemoveFromMachine()
+    {
+
+    }
+
    
 }
 
