@@ -35,7 +35,7 @@ public abstract class P_Item : MonoBehaviour
     //only used if in offPlayerStorage
     private int storageSlot;
             //machine that item is stored in
-    private P_Machine storedIn;
+    private P_Item storedIn;
 
 
     public P_Item(ItemState itemState,int itemTypeID, int itemID)
