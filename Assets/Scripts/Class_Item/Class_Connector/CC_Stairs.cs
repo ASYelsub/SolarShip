@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CC_Stairs : MonoBehaviour
+public class CC_Stairs : C_Connector
 {
-    // Start is called before the first frame update
-    void Start()
+    public CC_Stairs(ItemState itemState, int itemTypeID, int itemID) : base(itemState, itemTypeID, itemID)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

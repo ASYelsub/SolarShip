@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Addition : MonoBehaviour
+public class C_Addition : P_Item
 {
-    // Start is called before the first frame update
-    void Start()
+    public C_Addition(ItemState itemState, int itemTypeID, int itemID) : base(itemState, itemTypeID, itemID)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
