@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Connector : P_Item
+public abstract class C_Connector : P_Item
 {
     public abstract class ConnectorSegment
     {

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CC_Room : C_Addition
 {
-
-
     //the six corners of the room
     Vector3[] corners;
 
@@ -14,6 +12,7 @@ public class CC_Room : C_Addition
 
     public List<C_Machine> machines;
 
+    
 
     public class MachineSlot
     {

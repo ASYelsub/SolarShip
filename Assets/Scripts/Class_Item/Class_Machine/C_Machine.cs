@@ -2,32 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//A machine is something that can be opened and clicked around in
-//from a chest to an alchemiter
+//A machine is something that can be opened and clicked around in OR something the player can go into
+//from a chest to an alchemiter to a bed
 //usually you put other items in the machine to do something to them.
-public class C_Machine : P_Item
+public abstract class C_Machine : P_Item
 {
-    
-    //Where you put items
-    public class MachineSlot
-    {
-        enum machineSlotType {input,output,storage}
-
-        machineSlotType thisMachineSlotType;
-
-        public GameObject machineSlotPrefab;
-    }
-
-    public class MachineInterface
-    {
-        List<MachineSlot> machineSlots;
-        bool hasText;
-        string machineText;
-        public GameObject machineInterfacePrefab;
-    }
-
-    [SerializeField]
-    private MachineInterface thisInterface;
 
     //placed in 3D space
     public GameObject machineObjectPrefab;

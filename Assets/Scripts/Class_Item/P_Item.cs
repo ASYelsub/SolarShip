@@ -17,25 +17,28 @@ public abstract class P_Item : MonoBehaviour
     private bool canStack;
     
 
-
-    public enum ItemState { inInventory, inHand, offPlayerGround,offPlayerStorage}
-
+    public enum ItemState { inInventory, inHand, inWorld, inStorage}
     private ItemState iS;
     public ItemState IS { get{ return iS; } set { iS = value; } }
+
+
+    //Specific to Item State is below this//
+
+
     //only used if item is in player's inventory
     private int invSlot;
 
-    //only used if offPlayerGround
+    //only used if inWorld
     private Vector3 inWorldPosition;
     public Vector3 InWorldPosition { get { return inWorldPosition; } set { inWorldPosition = value; } }
 
     //only used if in player's hand
-    private enum useState { overOtherObject, interactOtherObject,nothing}
+    private enum useState { overOtherObject, interactOtherObject, nothing}
 
-    //only used if in offPlayerStorage
+    //only used if in inStorage
     private int storageSlot;
             //machine that item is stored in
-    private P_Item storedIn;
+    private C_Machine storedIn;
 
 
     public P_Item(ItemState itemState,int itemTypeID, int itemID)
