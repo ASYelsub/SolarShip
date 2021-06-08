@@ -81,7 +81,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _VoronoiPower: 1.3
-    - _VoronoiScale: 18
+    - _VoronoiScale: 0.5
     - _XScaling: 1
     - _YOffset: 1
     - _ZWrite: 1
