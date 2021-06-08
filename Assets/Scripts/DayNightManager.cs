@@ -17,7 +17,7 @@ public class DayNightManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(timeOfDay >= 24)
+       if(timeOfDay >= 360)
         {
             timeOfDay = 0;
         }
@@ -25,7 +25,7 @@ public class DayNightManager : MonoBehaviour
         {
             timeOfDay += dayChangeSpeed;
             directionalLightTransform.transform.Rotate(dayChangeSpeed, 0, 0);
-            dayNightLabelText.text = "Time of Day" + timeOfDay.ToString();
+            dayNightLabelText.text = "Time of Day: " + (timeOfDay / 15).ToString();
         }
     }
 }
