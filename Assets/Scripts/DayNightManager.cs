@@ -12,9 +12,13 @@ public class DayNightManager : MonoBehaviour
     //probably .01f
     public float dayChangeSpeed;
     float timeOfDay = 0f;
+    public float startRotation;
 
-    
-
+    private void Start()
+    {
+        directionalLightTransform.transform.eulerAngles = new Vector3(startRotation, 0, 0);
+        timeOfDay = startRotation;
+    }
     private void FixedUpdate()
     {
        if(timeOfDay >= 360)
