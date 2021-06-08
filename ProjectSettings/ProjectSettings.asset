@@ -574,7 +574,19 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;AMPLIFY_SHADER_EDITOR;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    4: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    7: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    13: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    14: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    19: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    21: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    25: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    27: UNITY_POST_PROCESSING_STACK_V2
+    28: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    29: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
+    30: RealtimeCSG;RealtimeCSG_1;RealtimeCSG_1_5;UNITY_POST_PROCESSING_STACK_V2;RealtimeCSG_1_5_69
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
