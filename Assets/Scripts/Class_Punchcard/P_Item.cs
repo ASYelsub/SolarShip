@@ -17,7 +17,7 @@ public abstract class P_Item : MonoBehaviour
     private bool canStack;
     
 
-    public enum ItemState { inInventory, inHand, inWorld, inStorage}
+    public enum ItemState { isPunchcard, isItem, inCombiner}
     private ItemState iS;
     public ItemState IS { get{ return iS; } set { iS = value; } }
 
@@ -48,26 +48,19 @@ public abstract class P_Item : MonoBehaviour
         this.ItemID = itemID;
     }
 
-    public void TouchOtherItem3D()
+
+    //test to see if has the correct things to go through the translator
+    public void GoThroughTranslator()
     {
 
     }
 
-    public void UnTouchOtherItem3D()
+
+    //if meets the goThroughTranslator test then it "spawns as an object"
+    public void SpawnAsObject()
     {
 
     }
-
-    public void SetInMachine()
-    {
-
-    }
-
-    public void RemoveFromMachine()
-    {
-
-    }
-
    
 }
 
