@@ -72,7 +72,7 @@ public class PlayerInteractionController : MonoBehaviour
     /// </summary>
     /// <returns><c>true</c>, if object interaction was added, <c>false</c> otherwise.</returns>
     /// <param name="objToAdd">Object to add.</param>
-    bool AddObjectInteraction(Transform objToAdd)
+    public bool AddObjectInteraction(Transform objToAdd)
     {
         int origSize = interactObjects.Count;
         interactObjects.Add(objToAdd);

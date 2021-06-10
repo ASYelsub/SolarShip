@@ -1359,7 +1359,7 @@ MonoBehaviour:
     meshQuery:
       layers: 16777223
       maskAndChannels: 234881031
-    surfaceParameter: 15942
+    surfaceParameter: 16108
     meshQueryIndex: 5
     subMeshQueryIndex: 0
     geometryHashValue: 8446675191229049998
@@ -10820,13 +10820,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616055521}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbcd5402e9523476d9cc69314a95e622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactObj: {fileID: 0}
-  cutoff: 45
+  visionCutoff: 20
+  distanceCutoff: 20
+  interactObjects: []
 --- !u!136 &1616055524
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11495,7 +11496,7 @@ MonoBehaviour:
     meshQuery:
       layers: 33554440
       maskAndChannels: 8
-    surfaceParameter: 15946
+    surfaceParameter: 16106
     meshQueryIndex: 1
     subMeshQueryIndex: 0
     geometryHashValue: -3807394303206493210
@@ -12107,7 +12108,7 @@ MonoBehaviour:
     meshQuery:
       layers: 16777223
       maskAndChannels: 234881031
-    surfaceParameter: 15940
+    surfaceParameter: 16104
     meshQueryIndex: 0
     subMeshQueryIndex: 0
     geometryHashValue: -3901134207701502305
