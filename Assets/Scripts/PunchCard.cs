@@ -29,7 +29,8 @@ public class PunchCard : MonoBehaviour
 
 
 
-    private void Start()
+   
+    public void onMake()
     {
         canPlace = false;
         expanded = false;

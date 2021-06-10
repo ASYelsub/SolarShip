@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class P_Item : MonoBehaviour
+public class P_Item : MonoBehaviour
 {
     //count of all items in game
     private int itemID;
@@ -15,11 +15,18 @@ public abstract class P_Item : MonoBehaviour
 
     //if an item can be in a stack with itself, dependent on itemTypeID
     private bool canStack;
-    
 
-    public enum ItemState { isPunchcard, isItem, inCombiner}
+
+    public enum ItemState { isPunchcard, isItem, inTranslator, doesntExist }
     private ItemState iS;
     public ItemState IS { get{ return iS; } set { iS = value; } }
+    public enum ItemName { wood = 0,
+        metal = 1,
+        thread = 2,
+        fishingNet = 3,
+        waterCollector = 4}
+    private ItemName iM;
+    public ItemName IM { get { return iM; } set { iM = value; } }
 
 
     //Specific to Item State is below this//
@@ -44,8 +51,10 @@ public abstract class P_Item : MonoBehaviour
     public P_Item(ItemState itemState,int itemTypeID, int itemID)
     {
         this.iS = itemState;
+        this.iM = (ItemName)itemTypeID;
         this.ItemTypeID = itemTypeID;
         this.ItemID = itemID;
+        print("Item number: " + ItemID + " of type: " + this.IM + " generated.");
     }
 
 

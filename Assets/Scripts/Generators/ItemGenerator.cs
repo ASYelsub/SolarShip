@@ -13,27 +13,42 @@ using UnityEngine;
 public class ItemGenerator : MonoBehaviour
 {
     //sort of the hollow "concept of item"
-    public static LinkedList<P_Item> itemTypes;
+    public LinkedList<P_Item> itemTypes;
+    public static int typeCount = 0;
+    public static int itemCount = 0;
 
     public static bool itemTypesGenerated = false;
 
     //all items in game
-    public static LinkedList<P_Item> itemStorage;
-
-
+    public LinkedList<P_Item> itemStorage;
+    private void Start()
+    {
+        itemTypes = new LinkedList<P_Item>();
+        itemStorage = new LinkedList<P_Item>();
+    }
     //Run on start from GameManager
-    public static void GenerateItemTypes(){
+    public void GenerateItemTypes() { 
         if (!itemTypesGenerated){
-            print("Item types generated.");
+      
             itemTypesGenerated = true;
-        }else if (itemTypesGenerated){
+            for (int i = 0; i < 5; i++)
+            {
+                itemCount++;
+                itemTypes.AddLast(new P_Item(P_Item.ItemState.doesntExist, typeCount, itemCount));
+                typeCount++;
+
+            }
+            
+            print("Item types generated.");
+        }
+        else if (itemTypesGenerated){
             print("Item types already generated, no effect");
         }
     }
     
 
     //Generation type: in another item, outside another item
-    public static P_Item GeneratePhyiscalItem(int itemTypeID, int generationType)
+    public P_Item GeneratePhyiscalItem(int itemTypeID, int generationType)
     {
         P_Item tempItem = null;
         foreach(P_Item i in itemTypes)
@@ -49,7 +64,7 @@ public class ItemGenerator : MonoBehaviour
     }
 
     //Deletion type: in another item, outside another item
-    public static void DeletePhysicalItem(int itemID, int deletionType)
+    public void DeletePhysicalItem(int itemID, int deletionType)
     {
         foreach(P_Item i in itemStorage)
         {
