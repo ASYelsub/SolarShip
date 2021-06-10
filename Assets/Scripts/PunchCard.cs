@@ -13,37 +13,39 @@ public class PunchCard : MonoBehaviour
 
     [Header("Components")]
     public GameObject slotParent;
-    public Image invSlot;
-    public Image invExpand;
+    public GameObject invSlot;
+    public GameObject invExpand;
 
-    public Image punchCardImage;
+    public GameObject punchCardImage;
 
-    public Image punchCardNameBack;
-    public Text punchCardName;
-    public Image punchCardNameBack_CanPlace;
-    public Text punchCardName_CanPlace;
+    public GameObject punchCardNameBack;
+    public GameObject punchCardName;
+    public GameObject punchCardNameBack_CanPlace;
+    public GameObject punchCardName_CanPlace;
 
-    public Image punchCardChecksBack;
-    public Image punchCardChecksBack_CanPlace;
+    public GameObject punchCardChecksBack;
+    public GameObject punchCardChecksBack_CanPlace;
 
 
 
 
     private void Start()
     {
-        punchCardNameBack_CanPlace.gameObject.SetActive(canPlace);
-        punchCardName_CanPlace.gameObject.SetActive(canPlace);
-        punchCardChecksBack_CanPlace.gameObject.SetActive(canPlace);
-        invSlotTransform = invExpand.gameObject.GetComponent<RectTransform>();
+        canPlace = false;
+        expanded = false;
+        punchCardNameBack_CanPlace.SetActive(canPlace);
+        punchCardName_CanPlace.SetActive(canPlace);
+        punchCardChecksBack_CanPlace.SetActive(canPlace);
+        invSlotTransform = invExpand.GetComponent<RectTransform>();
         deltaInit = invSlotTransform.sizeDelta;
-        deltaFinal = deltaInit + new Vector3(0, 10, 0);
+        deltaFinal = deltaInit + new Vector3(0, 100, 0);
     }
 
     public void buttonInput(){
         if (expanded)
-            collapseBack();
+            StartCoroutine(collapseBack());
         else
-            expandBack();
+            StartCoroutine(expandBack());
         expanded = !expanded;
     }
 
@@ -53,6 +55,7 @@ public class PunchCard : MonoBehaviour
 
     public IEnumerator expandBack()
     {
+        
         float t = 0;
 
         while (t < 10)
@@ -63,9 +66,9 @@ public class PunchCard : MonoBehaviour
 
         yield return null;
     }
-    public void collapseBack()
+    public IEnumerator collapseBack()
     {
-
+        yield return null;
     }
 
 

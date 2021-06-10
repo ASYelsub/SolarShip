@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1452544419}
         m_MethodName: buttonInput
         m_Mode: 1
         m_Arguments:
@@ -1260,7 +1260,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 0
 --- !u!1 &163031533
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1279,7 +1279,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &163031534
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1293,7 +1293,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &163031535
 MeshRenderer:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1332,7 +1332,7 @@ MeshRenderer:
   m_SortingOrder: 0
 --- !u!33 &163031536
 MeshFilter:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -1359,7 +1359,7 @@ MonoBehaviour:
     meshQuery:
       layers: 16777223
       maskAndChannels: 234881031
-    surfaceParameter: 15710
+    surfaceParameter: 15942
     meshQueryIndex: 5
     subMeshQueryIndex: 0
     geometryHashValue: 8446675191229049998
@@ -6231,7 +6231,6 @@ GameObject:
   - component: {fileID: 940228688}
   - component: {fileID: 940228687}
   - component: {fileID: 940228686}
-  - component: {fileID: 940228685}
   - component: {fileID: 940228684}
   m_Layer: 5
   m_Name: InvExpand
@@ -6302,7 +6301,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 940228685}
+      - m_Target: {fileID: 0}
         m_MethodName: buttonInput
         m_Mode: 1
         m_Arguments:
@@ -6313,30 +6312,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &940228685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940228682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba6f44b31ca3046cc98e4ca8853a6288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canPlace: 0
-  expanded: 0
-  slotParent: {fileID: 0}
-  invSlot: {fileID: 940228687}
-  invExpand: {fileID: 0}
-  punchCardImage: {fileID: 0}
-  punchCardNameBack: {fileID: 0}
-  punchCardName: {fileID: 0}
-  punchCardNameBack_CanPlace: {fileID: 0}
-  punchCardName_CanPlace: {fileID: 0}
-  punchCardChecksBack: {fileID: 0}
-  punchCardChecksBack_CanPlace: {fileID: 0}
 --- !u!114 &940228686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9830,15 +9805,15 @@ MonoBehaviour:
   canPlace: 0
   expanded: 0
   slotParent: {fileID: 1452544417}
-  invSlot: {fileID: 97760727}
-  invExpand: {fileID: 940228687}
-  punchCardImage: {fileID: 1270038843}
-  punchCardNameBack: {fileID: 847063143}
-  punchCardName: {fileID: 1201311961}
-  punchCardNameBack_CanPlace: {fileID: 172224466}
-  punchCardName_CanPlace: {fileID: 1377102891}
-  punchCardChecksBack: {fileID: 1501895901}
-  punchCardChecksBack_CanPlace: {fileID: 1304875148}
+  invSlot: {fileID: 97760725}
+  invExpand: {fileID: 940228682}
+  punchCardImage: {fileID: 1270038841}
+  punchCardNameBack: {fileID: 847063140}
+  punchCardName: {fileID: 1201311959}
+  punchCardNameBack_CanPlace: {fileID: 172224463}
+  punchCardName_CanPlace: {fileID: 1377102889}
+  punchCardChecksBack: {fileID: 1501895898}
+  punchCardChecksBack_CanPlace: {fileID: 1304875145}
 --- !u!1 &1457030403
 GameObject:
   m_ObjectHideFlags: 0
@@ -10076,7 +10051,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 0
 --- !u!1 &1481815963
 GameObject:
-  m_ObjectHideFlags: 3
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10093,7 +10068,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1481815964
 Transform:
-  m_ObjectHideFlags: 11
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -10110,7 +10085,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1481815965
 MonoBehaviour:
-  m_ObjectHideFlags: 27
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -11455,7 +11430,7 @@ Mesh:
     path: 
 --- !u!1 &1695021571
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -11473,7 +11448,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1695021572
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -11487,7 +11462,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1695021573
 MeshCollider:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -11520,7 +11495,7 @@ MonoBehaviour:
     meshQuery:
       layers: 33554440
       maskAndChannels: 8
-    surfaceParameter: 15708
+    surfaceParameter: 15946
     meshQueryIndex: 1
     subMeshQueryIndex: 0
     geometryHashValue: -3807394303206493210
@@ -12033,7 +12008,7 @@ Mesh:
     path: 
 --- !u!1 &1837943221
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12052,7 +12027,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &1837943222
 Transform:
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12066,7 +12041,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1837943223
 MeshRenderer:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12105,7 +12080,7 @@ MeshRenderer:
   m_SortingOrder: 0
 --- !u!33 &1837943224
 MeshFilter:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 16
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -12132,7 +12107,7 @@ MonoBehaviour:
     meshQuery:
       layers: 16777223
       maskAndChannels: 234881031
-    surfaceParameter: 15706
+    surfaceParameter: 15940
     meshQueryIndex: 0
     subMeshQueryIndex: 0
     geometryHashValue: -3901134207701502305
