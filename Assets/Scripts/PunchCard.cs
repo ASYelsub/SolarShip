@@ -15,6 +15,7 @@ public class PunchCard : MonoBehaviour
     public GameObject slotParent;
     public GameObject invSlot;
     public GameObject invExpand;
+    public GameObject invExpandFinal;
 
     public GameObject punchCardImage;
 
@@ -26,12 +27,24 @@ public class PunchCard : MonoBehaviour
     public GameObject punchCardChecksBack;
     public GameObject punchCardChecksBack_CanPlace;
 
+    public List<GameObject> invExpand2s;
+    public List<GameObject> checkMarks;
 
+    public float expandSpeed;
 
-
+    PunchcardManager pcManager;
    
     public void onMake()
     {
+        for (int i = 0; i < invExpand2s.Count; i++)
+        {
+            invExpand2s[i].SetActive(false);
+        }
+        for (int i = 0; i < checkMarks.Count; i++)
+        {
+            checkMarks[i].SetActive(false);
+        }
+        pcManager = FindObjectOfType<PunchcardManager>();
         canPlace = false;
         expanded = false;
         punchCardNameBack_CanPlace.SetActive(canPlace);
@@ -39,15 +52,20 @@ public class PunchCard : MonoBehaviour
         punchCardChecksBack_CanPlace.SetActive(canPlace);
         invSlotTransform = invExpand.GetComponent<RectTransform>();
         deltaInit = invSlotTransform.sizeDelta;
-        deltaFinal = deltaInit + new Vector3(0, 100, 0);
+        deltaFinal = invExpandFinal.GetComponent<RectTransform>().sizeDelta;
     }
 
     public void buttonInput(){
-        if (expanded)
-            StartCoroutine(collapseBack());
-        else
-            StartCoroutine(expandBack());
-        expanded = !expanded;
+        if (!pcManager.punchCardIsExpanding)
+        {
+            pcManager.punchCardIsExpanding = true;
+            if (expanded)
+                StartCoroutine(collapseBack());
+            else
+                StartCoroutine(expandBack());
+            expanded = !expanded;
+            pcManager.punchCardIsExpanding = false;
+        }
     }
 
     private RectTransform invSlotTransform;
@@ -56,19 +74,33 @@ public class PunchCard : MonoBehaviour
 
     public IEnumerator expandBack()
     {
-        
         float t = 0;
-
-        while (t < 10)
+        
+        while (t < 1.5f)
         {
             invSlotTransform.sizeDelta = Vector3.Lerp(deltaInit, deltaFinal, t);
-            t += .1f;
+            t += expandSpeed * Time.deltaTime;
+            yield return null;
         }
 
+
+        for (int i = 0; i < invExpand2s.Count; i++)
+        {invExpand2s[i].SetActive(true);}
         yield return null;
     }
     public IEnumerator collapseBack()
     {
+        float t = 0;
+        for (int i = 0; i < invExpand2s.Count; i++)
+        {
+            invExpand2s[i].SetActive(false);
+        }
+        while (t < 1.5f)
+        {
+            invSlotTransform.sizeDelta = Vector3.Lerp(deltaFinal, deltaInit, t);
+            t += expandSpeed * Time.deltaTime;
+            yield return null;
+        }
         yield return null;
     }
 

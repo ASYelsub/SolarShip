@@ -15,8 +15,10 @@ public class PunchcardManager : MonoBehaviour
     //amount of item types
     //but when a punch card is used the slot is now empty/different
 
+    public bool punchCardIsExpanding;
     public void GeneratePunchCards(ItemGenerator IG)
     {
+        punchCardIsExpanding = false;
         slots = IG.itemTypes;
         foreach (P_Item item in slots)
         {

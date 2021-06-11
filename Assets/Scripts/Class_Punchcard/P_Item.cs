@@ -54,7 +54,7 @@ public class P_Item : MonoBehaviour
         this.iM = (ItemName)itemTypeID;
         this.ItemTypeID = itemTypeID;
         this.ItemID = itemID;
-        print("Item number: " + ItemID + " of type: " + this.IM + " generated.");
+//        print("Item number: " + ItemID + " of type: " + this.IM + " generated.");
     }
 
 
