@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    ItemGenerator IG;
+    PunchcardManager PM;
     void Start()
     {
-        ItemGenerator.GenerateItemTypes();
+        IG = gameObject.GetComponent<ItemGenerator>();
+        IG.GenerateItemTypes();
+        PM = gameObject.GetComponent<PunchcardManager>();
+        PM.GeneratePunchCards(IG);
     }
 
 }
