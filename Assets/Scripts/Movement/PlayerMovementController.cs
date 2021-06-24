@@ -18,8 +18,10 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float jumpHeight = 3;
 
     //storage data to calculate movement
-    private float yVel = 0;
-    private Vector3 velocity, direction;
+    [SerializeField] private float yVel = 0;
+    [SerializeField] private Vector3 velocity, direction;
+
+    public bool onLadder = false;
 
 
 
@@ -45,6 +47,21 @@ public class PlayerMovementController : MonoBehaviour
         KeyboardMovement();
         MouseRotation();
 
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Ladder")
+        {
+            onLadder = true;
+            yVel = 0;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        onLadder = false;
     }
 
     /// <summary>
@@ -57,7 +74,7 @@ public class PlayerMovementController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float depth = Input.GetAxis("Vertical");
 
-        if (controller.isGrounded)
+        if (controller.isGrounded && !onLadder)
         {
             direction += transform.right * horizontal;
             direction += transform.forward * depth;
@@ -69,9 +86,19 @@ public class PlayerMovementController : MonoBehaviour
                 yVel = jumpHeight;
             }
         }
-        else
+        else if (!onLadder)
         {
             yVel -= gravity;
+        } else
+        {
+            velocity = Vector3.zero;
+            if (depth != 0)
+            {
+                yVel = (jumpHeight / 2) * depth;
+            } else
+            {
+                yVel = 0;
+            }
         }
 
         velocity.y = yVel;
