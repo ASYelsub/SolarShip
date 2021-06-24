@@ -1314,7 +1314,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 482267525516014220}
-        m_MethodName: buttonInput
+        m_MethodName: ButtonInput
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1489,6 +1489,8 @@ MonoBehaviour:
   - {fileID: 482267525709213133}
   - {fileID: 482267524343566825}
   expandSpeed: 3
+  previous: {fileID: 0}
+  next: {fileID: 0}
 --- !u!1 &482267525647084727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,7 +1592,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482267525647084727}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -1626,8 +1628,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: buttonInput
+      - m_Target: {fileID: 482267525516014220}
+        m_MethodName: ButtonInput
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
