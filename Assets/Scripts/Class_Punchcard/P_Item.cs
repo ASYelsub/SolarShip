@@ -18,15 +18,15 @@ public class P_Item : MonoBehaviour
 
 
     public enum ItemState { isPunchcard, isItem, inTranslator, doesntExist }
-    private ItemState iS;
-    public ItemState IS { get{ return iS; } set { iS = value; } }
+    public ItemState iS;
+    
     public enum ItemName { wood = 0,
         metal = 1,
         thread = 2,
         fishingNet = 3,
         waterCollector = 4}
-    private ItemName iM;
-    public ItemName IM { get { return iM; } set { iM = value; } }
+    public ItemName iN;
+    
 
 
     //Specific to Item State is below this//
@@ -51,7 +51,7 @@ public class P_Item : MonoBehaviour
     public P_Item(ItemState itemState,int itemTypeID, int itemID)
     {
         this.iS = itemState;
-        this.iM = (ItemName)itemTypeID;
+        this.iN = (ItemName)itemTypeID;
         this.ItemTypeID = itemTypeID;
         this.ItemID = itemID;
 //        print("Item number: " + ItemID + " of type: " + this.IM + " generated.");

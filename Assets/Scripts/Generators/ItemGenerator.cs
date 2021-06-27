@@ -36,6 +36,7 @@ public class ItemGenerator : MonoBehaviour
                 itemCount++;
                 itemTypes.AddLast(new P_Item(P_Item.ItemState.doesntExist, typeCount, itemCount));
                 typeCount++;
+               
 
             }
             

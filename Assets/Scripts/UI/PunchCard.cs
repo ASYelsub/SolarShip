@@ -33,8 +33,11 @@ public class PunchCard : MonoBehaviour
     public float expandSpeed;
 
     PunchcardManager pcManager;
+
+    public int itemID;
+    public int itemName;
    
-    public void onMake()
+    public void OnMake(int id)
     {
         for (int i = 0; i < invExpand2s.Count; i++)
         {
@@ -54,15 +57,25 @@ public class PunchCard : MonoBehaviour
         deltaInit = invSlotTransform.sizeDelta;
         deltaFinal = invExpandFinal.GetComponent<RectTransform>().sizeDelta;
     }
+    
 
-    public void buttonInput(){
+    public void ButtonInput(){
         if (!pcManager.punchCardIsExpanding)
         {
             pcManager.punchCardIsExpanding = true;
             if (expanded)
-                StartCoroutine(collapseBack());
+            {
+               
+                
+                StartCoroutine(CollapseBack());
+            }
+                
             else
-                StartCoroutine(expandBack());
+            {
+                pcManager.MovePunchCardsDown(this);
+                StartCoroutine(ExpandBack());
+            }
+               
             expanded = !expanded;
             pcManager.punchCardIsExpanding = false;
         }
@@ -72,7 +85,7 @@ public class PunchCard : MonoBehaviour
     private Vector3 deltaInit;
     private Vector3 deltaFinal;
 
-    public IEnumerator expandBack()
+    public IEnumerator ExpandBack()
     {
         float t = 0;
         
@@ -88,7 +101,7 @@ public class PunchCard : MonoBehaviour
         {invExpand2s[i].SetActive(true);}
         yield return null;
     }
-    public IEnumerator collapseBack()
+    public IEnumerator CollapseBack()
     {
         float t = 0;
         for (int i = 0; i < invExpand2s.Count; i++)
@@ -104,5 +117,16 @@ public class PunchCard : MonoBehaviour
         yield return null;
     }
 
+
+    public IEnumerator MoveDown()
+    {   float t = 0;
+        while (t < 1.5f)
+        {
+            slotParent.GetComponent<RectTransform>().localPosition = Vector3.Lerp(deltaInit,deltaFinal,t);
+            t+= expandSpeed * Time.deltaTime;
+            yield return null;
+        }
+        yield return null;
+    }
 
 }
