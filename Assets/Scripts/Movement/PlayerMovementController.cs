@@ -23,7 +23,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public bool onLadder = false;
 
-
+    public bool mouseLock = true;
 
 
     //tunable values for sensitivity and clamping
@@ -111,19 +111,24 @@ public class PlayerMovementController : MonoBehaviour
     /// ClampAngle limits the up and down rotation.
     /// </summary>
     private void MouseRotation() {
-
-        rotationY = Input.GetAxis("Mouse Y") * sensitivityX;
-        rotationX = Input.GetAxis("Mouse X") * sensitivityY;
-        if (rotationY > 0)
-        {
-            Angles = new Vector3(Mathf.MoveTowards(Angles.x, -clampAngle, rotationY), Angles.y + rotationX, 0);
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+            mouseLock = !mouseLock;
         }
-        else
-        {
-            Angles = new Vector3(Mathf.MoveTowards(Angles.x, clampAngle, -rotationY),
-            Angles.y + rotationX, 0);
-        }
-        transform.localEulerAngles = Angles;
 
+        if (mouseLock)
+        {
+            rotationY = Input.GetAxis("Mouse Y") * sensitivityX;
+            rotationX = Input.GetAxis("Mouse X") * sensitivityY;
+            if (rotationY > 0)
+            {
+                Angles = new Vector3(Mathf.MoveTowards(Angles.x, -clampAngle, rotationY), Angles.y + rotationX, 0);
+            }
+            else
+            {
+                Angles = new Vector3(Mathf.MoveTowards(Angles.x, clampAngle, -rotationY),
+                Angles.y + rotationX, 0);
+            }
+            transform.localEulerAngles = Angles;
+        }
     }
 }
